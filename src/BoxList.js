@@ -12,14 +12,14 @@ class BoxList extends Component {
     //Using PCFS, you can initliaze the state without constructors & super props
     state = {
         boxes: [
-          { width: '100', height: '100', color: 'red' },
-          { width: '150', height: '150', color: 'blue' },
-          { width: '200', height: '200', color: 'green' }
+          { id: uuidv4(), width: '100', height: '100', color: 'red' },
+          { id: uuidv4(), width: '150', height: '150', color: 'blue' },
+          { id: uuidv4(), width: '200', height: '200', color: 'green' }
         ],
         newBox: {
-            width: '',
-            height: '',
-            color: ''
+          width: "",
+          height: "",
+          color: ""
         }
       };
     
@@ -43,16 +43,24 @@ class BoxList extends Component {
         }));
     };
 
+     // Method to remove a box based on its id
+    removeBox = (id) => {
+        this.setState((st) => ({
+        boxes: st.boxes.filter((box) => box.id !== id),
+        }));
+    };
+
     render(){
         return (
             <div>
                 {this.state.boxes.map((box) => (
             <Box
-            key={uuidv4()}
-            id={uuidv4()}
+            key={box.id} // Use the box's id as the key
+            id={box.id} // Pass the id to the Box component
             width={box.width}
             height={box.height}
             color={box.color}
+            removeBox={() => this.removeBox(box.id)} // Pass removeBox function
             />
         ))}
             <BoxForm
