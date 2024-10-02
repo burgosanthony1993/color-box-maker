@@ -12,9 +12,9 @@ class BoxList extends Component {
     //Using PCFS, you can initliaze the state without constructors & super props
     state = {
         boxes: [
-          { width: '100px', height: '100px', color: 'red' },
-          { width: '150px', height: '150px', color: 'blue' },
-          { width: '200px', height: '200px', color: 'green' }
+          { width: '100', height: '100', color: 'red' },
+          { width: '150', height: '150', color: 'blue' },
+          { width: '200', height: '200', color: 'green' }
         ],
         newBox: {
             width: '',
@@ -25,16 +25,23 @@ class BoxList extends Component {
     
    //Using PCFS, Arrow Functions automatically bind this
    handleSubmit = (evt) => {
-    evt.preventDefault();
-    this.props.addBox(this.state);
-    this.setState({ height: '', width: '', color: ''})
-   }
+        evt.preventDefault();
+        // Update boxes with the new box details
+        this.setState((prevState) => ({
+            boxes: [...prevState.boxes, { ...prevState.newBox, id: uuidv4() }],
+            newBox: { width: '', height: '', color: '' } // Resetting newBox state
+        }));
+    };
 
-   handleChange = (evt) => {
-    this.setState({
-        [evt.target.name]: evt.target.value
-    })
-   }
+    handleChange = (evt) => {
+        const { name, value } = evt.target;
+        this.setState((prevState) => ({
+            newBox: {
+                ...prevState.newBox,
+                [name]: value
+            }
+        }));
+    };
 
     render(){
         return (

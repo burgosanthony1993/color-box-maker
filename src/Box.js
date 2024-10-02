@@ -9,14 +9,15 @@ class Box extends Component {
         const {width, height, color} = this.props;
 
         const BoxStyle = {
-            width: width,
-            height: height,
+            width: `${width}px`,
+            height: `${height}px`,
             backgroundColor: color,
             display: 'inline-block',
             margin: '10px'
           };
         return (
             <div style={BoxStyle}>
+                
                 {/* Display the box with the given dimensions and color */}
             </div>
         )
